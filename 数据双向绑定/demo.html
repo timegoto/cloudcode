@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<input type="file" id="inputArea">
+<br>
+<br>
+<br>
+<br>
+<input type="text" id="inputs">
+<span id="spans"></span>
+</body>
+<script>
+
+	//数据双向绑定
+	var j = {
+		val: ''
+	}
+	Object.defineProperty(j, 'value', {
+		get: function () {
+			return this.val;
+		},
+		set: function (newValue) {
+			this.val = newValue;
+		}
+	})
+	inputs.onkeyup = function () {
+		j.value = this.value;
+		spans.innerHTML = j.val;
+	}
+
+	//以表格的的形式 在控制台输出obj
+	var Obj = {
+		Obj1: {
+			a: "aaa",
+			b: "bbb",
+			c: "ccc"
+		},
+		Obj2: {
+			a: "aaa",
+			b: "bbb",
+			c: "ccc"
+		},
+		Obj3: {
+			a: "aaa",
+			b: "bbb",
+			c: "ccc"
+		},
+		Obj4: {
+			a: "aaa",
+			b: "bbb",
+			c: "ccc"
+		}
+	}
+
+	console.table(Obj);
+
+	var Arr = [
+		["aa", "bb", "cc"],
+		["dd", "ee", "ff"],
+		["gg", "hh", "ii"],
+	]
+
+	console.table(Arr);
+</script>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+
+<!--<head>-->
+<!--<meta charset="UTF-8">-->
+<!--<title>data-binding-hijacking</title>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<input q-value="value" type="text" id="input">-->
+<!--<div q-text="value" id="el"></div>-->
+<!--<script>-->
+
+
+<!--var elems = [document.getElementById('el'), document.getElementById('input')];-->
+
+<!--var data = {-->
+<!--value: 'hello!'-->
+<!--};-->
+
+<!--var command = {-->
+<!--text: function(str) {-->
+<!--this.innerHTML = str;-->
+<!--},-->
+<!--value: function(str) {-->
+<!--this.setAttribute('value', str);-->
+<!--}-->
+<!--};-->
+
+<!--var scan = function() {-->
+<!--/**-->
+<!--* 扫描带指令的节点属性-->
+<!--*/-->
+<!--for (var i = 0, len = elems.length; i < len; i++) {-->
+<!--var elem = elems[i];-->
+<!--elem.command = [];-->
+<!--for (var j = 0, len1 = elem.attributes.length; j < len1; j++) {-->
+<!--var attr = elem.attributes[j];-->
+<!--if (attr.nodeName.indexOf('q-') >= 0) {-->
+<!--/**-->
+<!--* 调用属性指令-->
+<!--*/-->
+<!--command[attr.nodeName.slice(2)].call(elem, data[attr.nodeValue]);-->
+<!--elem.command.push(attr.nodeName.slice(2));-->
+
+<!--}-->
+<!--}-->
+<!--}-->
+<!--}-->
+
+<!--var bValue;-->
+<!--/**-->
+<!--* 定义属性设置劫持-->
+<!--*/-->
+<!--var defineGetAndSet = function(obj, propName) {-->
+<!--try {-->
+<!--Object.defineProperty(obj, propName, {-->
+
+<!--get: function() {-->
+<!--return bValue;-->
+<!--},-->
+<!--set: function(newValue) {-->
+<!--bValue = newValue;-->
+<!--scan();-->
+<!--},-->
+
+<!--enumerable: true,-->
+<!--configurable: true-->
+<!--});-->
+<!--} catch (error) {-->
+<!--console.log("browser not supported.");-->
+<!--}-->
+<!--}-->
+<!--/**-->
+<!--* 初始化数据-->
+<!--*/-->
+<!--scan();-->
+
+<!--/**-->
+<!--* 可以理解为做数据劫持监听-->
+<!--*/-->
+<!--defineGetAndSet(data, 'value');-->
+
+<!--/**-->
+<!--* 数据绑定监听-->
+<!--*/-->
+<!--if(document.addEventListener){-->
+<!--elems[1].addEventListener('keyup', function(e) {-->
+<!--data.value = e.target.value;-->
+<!--}, false);-->
+<!--}else{-->
+<!--elems[1].attachEvent('onkeyup', function(e) {-->
+<!--data.value = e.target.value;-->
+<!--}, false);-->
+<!--}-->
+
+<!--setTimeout(function() {-->
+<!--data.value = 'fuck';-->
+<!--}, 2000);-->
+
+
+<!--var obj = {};-->
+<!--obj.defineProperty(obj,'hello',{-->
+<!--get:function () {-->
+<!--console.log("1111111");-->
+<!--},-->
+<!--set:function () {-->
+<!--console.log("wwwwww");-->
+<!--}-->
+<!--})-->
+
+<!--console.log(obj.hello);-->
+<!--console.log(obj.hello="sss");-->
+<!--</script>-->
+<!--</body>-->
+
+<!--</html>-->
